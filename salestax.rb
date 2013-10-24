@@ -9,10 +9,6 @@ When purchasing item, receipt lists:
 - total cost of item
 - tax paid
 
-Formula for rounding salestax:
-p = (np/100) rounded up to nearest 0.05 sales tax
-=end
-
 =begin 
 Attributes on receipt:
 - name of item
@@ -21,10 +17,6 @@ Attributes on receipt:
 - tax exemptions
 - is it imported
 =end
-
-
-
-
 
 	class Product 
 		attr_accessor(:quantity, :name, :price)
