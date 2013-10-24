@@ -23,29 +23,127 @@ Attributes on receipt:
 =end
 
 
-#Input 1
 
-	class ShoppingBasket 
-		attr_accessor :quantity, :name, :price
+	class Product 
+		attr_accessor(:quantity, :name, :price)
 
 		def initialize(quantity, name, price)
 			@quantity = quantity
 			@name = name
 			@price = price
 		end
+
+		# def quantity 
+		# 	@quantity
+		# end
+
+		# def quantity=(quantity)
+		# 	@quantity = quantity
+		# end
+
+
+		def tax_rate
+			0.10
+		end
+
+		def subtotal
+			@quantity * @price 
+		end
+
+		def sales_tax	
+			subtotal * tax_rate
+		end
+
+		def total_price
+			subtotal + sales_tax
+		end
 	end
 
-	basket1 = ShoppingBasket.new(1, "Book", 12.99)
-	basket2 = ShoppingBasket.new(1, "CD", 14.99)
-	basket3 = ShoppingBasket.new(1, "Chocolate bar", 0.85)
+	class Exempt < Product
+		def tax_rate
+			0
+		end
+	end
+
+	class Imported  < Product
+		def tax_rate
+			super + 0.05  #super is a word that says run the parent 
+		end
+	end
+
+	class ImportedExempt < Exempt
+		def tax_rate
+			super + 0.5
+		end
+	end
+
+# Doing the calculations
+
+	class Receipt
+		attr_accessor :products
+
+		def initialize(*products)  # * is called a splat operator
+			@products = products
+		end
+
+		def salestax_cal
+			# Refactor
+			total1 = 0
+			@products.each do |p|    # makes a loop (enumerable look up), look up "map" 
+				total1 += p.sales_tax # total1 = total1 + p.sales_tax
+			end
+			return total1
+		end
+
+		def total
+			# Refactor
+			total = 0
+			@products.each do |p|
+				total += p.total_price
+			end
+			return total
+		end
+
+		def print_totals
+			@products.each do |p| 
+				puts "#{p.quantity} #{p.name} : #{p.price}"
+			end
+
+
+			puts "Sales Taxes: #{salestax_cal}"
+			puts "Total: #{total}"
+		end
+	end
+
+# Regular Products
+
+	cd = Product.new(1, "CD", 14.99)
+	chocolate = Product.new(1, "Chocolate bar", 0.85)
+	perfume = Product.new(1, "Perfume", 20.89)
+
+# Tax Exempt
+	book = Exempt.new(1, "Book", 12.99)
+	headache_pills = Exempt.new(1, "Headache pills", 9.75)
+	
+# Imported
+
+	imported_chocolates = Imported.new(1, "Imported Chocolate", 10.50)
+	imported_perfume = Imported.new(1, "Imported Perfume", 54.65)
+
+# Printing the Order outputs 
+
+	order1 = Receipt.new(book, cd, chocolate)
+	order2 = Receipt.new(imported_chocolates, imported_perfume)
+	order3 = Receipt.new(imported_perfume, perfume, headache_pills, imported_chocolates)
+	puts order1.print_totals
+	puts order2.print_totals
+	puts order3.print_totals
+
 
 
 	
 
-	puts "#{basket1.quantity} - #{basket1.name} - #{basket1.price}"
-	puts "#{basket2.quantity} - #{basket2.name} - #{basket2.price}"
-	puts "#{basket3.quantity} - #{basket3.name} - #{basket3.price}"
 
 
-	
+
 
