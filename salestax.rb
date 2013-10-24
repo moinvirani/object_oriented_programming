@@ -71,7 +71,6 @@ Attributes on receipt:
 	end
 
 
-
 # Doing the calculations
 
 	class Receipt
