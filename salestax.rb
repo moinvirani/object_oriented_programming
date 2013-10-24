@@ -75,7 +75,7 @@ Attributes on receipt:
 
 	class ImportedExempt < Exempt
 		def tax_rate
-			super + 0.5
+			super + 0.05
 		end
 	end
 
@@ -113,8 +113,8 @@ Attributes on receipt:
 				puts "#{p.quantity} #{p.name} : #{p.price}"
 			end
 
-			puts "Sales Taxes: #{salestax_cal}"
-			puts "Total: #{total}"
+			puts "Sales Taxes: #{sprintf('%.2f', salestax_cal)}"
+			puts "Total: #{sprintf('%.2f', total)}"
 		end
 	end
 
