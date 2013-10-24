@@ -24,6 +24,8 @@ Attributes on receipt:
 
 
 
+
+
 	class Product 
 		attr_accessor(:quantity, :name, :price)
 
@@ -77,22 +79,24 @@ Attributes on receipt:
 		end
 	end
 
+
+
 # Doing the calculations
 
 	class Receipt
 		attr_accessor :products
 
-		def initialize(*products)  # * is called a splat operator
+		def initialize(*products)  	# * is called a splat operator
 			@products = products
 		end
 
 		def salestax_cal
 			# Refactor
-			total1 = 0
+			sales_tax_total = 0
 			@products.each do |p|    # makes a loop (enumerable look up), look up "map" 
-				total1 += p.sales_tax # total1 = total1 + p.sales_tax
+				sales_tax_total += p.sales_tax # sales_tax_total = sales_tax_total + p.sales_tax
 			end
-			return total1
+			return sales_tax_total
 		end
 
 		def total
@@ -109,7 +113,6 @@ Attributes on receipt:
 				puts "#{p.quantity} #{p.name} : #{p.price}"
 			end
 
-
 			puts "Sales Taxes: #{salestax_cal}"
 			puts "Total: #{total}"
 		end
@@ -118,16 +121,16 @@ Attributes on receipt:
 # Regular Products
 
 	cd = Product.new(1, "CD", 14.99)
-	chocolate = Product.new(1, "Chocolate bar", 0.85)
 	perfume = Product.new(1, "Perfume", 20.89)
 
 # Tax Exempt
-	book = Exempt.new(1, "Book", 12.99)
+	book = Exempt.new(1, "Book", 12.49)
+	chocolate = Exempt.new(1, "Chocolate bar", 0.85)
 	headache_pills = Exempt.new(1, "Headache pills", 9.75)
 	
 # Imported
 
-	imported_chocolates = Imported.new(1, "Imported Chocolate", 10.50)
+	imported_chocolates = ImportedExempt.new(1, "Imported Chocolate", 10.50)
 	imported_perfume = Imported.new(1, "Imported Perfume", 54.65)
 
 # Printing the Order outputs 
@@ -138,10 +141,6 @@ Attributes on receipt:
 	puts order1.print_totals
 	puts order2.print_totals
 	puts order3.print_totals
-
-
-
-	
 
 
 
