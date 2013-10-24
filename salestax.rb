@@ -9,7 +9,6 @@ When purchasing item, receipt lists:
 - total cost of item
 - tax paid
 
-=begin 
 Attributes on receipt:
 - name of item
 - total quantity
